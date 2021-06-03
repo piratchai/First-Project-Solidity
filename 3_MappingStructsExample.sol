@@ -2,15 +2,24 @@
 pragma solidity >=0.7.0 <0.9.0;
 
 contract MappingStructsExample {
+    
+    mapping(address => uint) private addressReceived;
+    
     function getBalance() public view returns(uint) {
-        return address(this).balance;
+        address msgOwner = msg.sender;
+        return addressReceived[msgOwner];
     }
     
     function sendMoney() public payable {
-        
+        address msgSender = msg.sender;
+        uint amount = msg.value;
+        addressReceived[msgSender] = amount; 
     }
     
     function withdrawAllMoney(address payable _to) public {
-        _to.transfer(address(this).balance);
+        address msgSender = msg.sender;
+        uint amount = addressReceived[msgSender];
+        addressReceived[msgSender] = 0;
+        _to.transfer(amount);
     }
 }
