@@ -3,11 +3,11 @@ pragma solidity >=0.7.0 <0.9.0;
 
 
 contract WillThrow {
-    function aFunction() public {
+    function aFunction() public pure {
         require(false, "Error Message");
     }
     
-    function hasError() public {
+    function hasError() public pure {
         require(1 == 2, "Error Message");
     }
 }
